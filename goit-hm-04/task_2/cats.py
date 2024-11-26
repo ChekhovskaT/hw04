@@ -1,13 +1,13 @@
 from pathlib import Path
 from pprint import pprint
 
-path = Path(__file__).parent
+file_path = Path(__file__).parent
 
 def get_cats_info(path):
 
     cats_info = []
     try:
-        with open (path / "cats_info.txt", 'r', encoding='utf-8') as file:
+        with open (path, 'r', encoding='utf-8') as file:
             # Remove extra characters and split the string into parts
             for line in file:
                 line = line.strip()
@@ -32,6 +32,7 @@ def get_cats_info(path):
     return cats_info
 
 # Example of using the function
+path = file_path / "cats_info.txt"
 cats_information = get_cats_info(path)
 pprint(cats_information, sort_dicts=False)
 

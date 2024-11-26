@@ -1,12 +1,12 @@
 from pathlib import Path
 
 #Determining the directory where the script file is located
-path = Path(__file__).parent
+file_path = Path(__file__).parent
 
 def get_total_salary(path):
     try:
         # Opening a file using the context manager
-        with open(path / "salary_file.txt", 'r', encoding='utf-8') as file:
+        with open(path, 'r', encoding='utf-8') as file:
             total_salary_amount = 0
             company_developers = 0
 
@@ -18,7 +18,7 @@ def get_total_salary(path):
                     # Split a string into name and salary
                     name, salary = line.split(',')
                     # Add salary to total
-                    total_salary_amount += int(salary)
+                    total_salary_amount += float(salary)
                     # Increase developer counter
                     company_developers += 1
                 except ValueError:
@@ -28,9 +28,10 @@ def get_total_salary(path):
             if company_developers > 0:
                 average_salary = total_salary_amount / company_developers
             else:
+                # Avoiding division by 0
                 average_salary = 0
 
-            return total_salary_amount, int(average_salary)
+            return total_salary_amount, average_salary
         
     except FileNotFoundError:
         print(f"File not found at {path}")
@@ -41,5 +42,6 @@ def get_total_salary(path):
 
 # Function testing
 if __name__ == "__main__":
-    result = get_total_salary(path)
-    print(f'Total salary amount is: {result[0]}, average salary is: {result[1]}')
+    path = file_path / "salary_file.txt"
+    total, average = get_total_salary(path)
+    print(f'Total salary amount is: {total}, average salary is: {average}')
